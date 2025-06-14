@@ -9,7 +9,7 @@ class EventController extends Controller
 {
     public function index()
 {
-    $events = Event::all();
+    $events = Event::where('user_id', auth()->id())->get();
     return view('calendar.layout', compact('events'));
 }
 
@@ -18,9 +18,9 @@ class EventController extends Controller
         return view('calendar.layout');
     }
 
-    public function store(Request $request)
+public function store(Request $request)
 {
-    $request->validate([
+    $validated = $request->validate([
         'title' => 'required|string',
         'start_time' => 'required|date',
         'end_time' => 'nullable|date',
@@ -28,7 +28,9 @@ class EventController extends Controller
         'description' => 'nullable|string'
     ]);
 
-    $event = Event::create($request->all());
+    $validated['user_id'] = auth()->id(); // Gán user đang đăng nhập
+
+    $event = Event::create($validated);
 
     if ($request->wantsJson()) {
         return response()->json(['message' => 'Sự kiện đã được tạo thành công', 'event' => $event], 201);
@@ -36,6 +38,7 @@ class EventController extends Controller
 
     return redirect()->route('calendar.layout')->with('success', 'Sự kiện đã được tạo thành công.');
 }
+
 
 
     public function show($id)
