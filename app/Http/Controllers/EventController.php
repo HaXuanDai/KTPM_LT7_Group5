@@ -8,44 +8,44 @@ use App\Models\Event;
 class EventController extends Controller
 {
     public function index()
-{
-    $events = Event::where('user_id', auth()->id())->get();
-    return view('calendar.layout', compact('events'));
-}
+    {
+        $events = Event::where('user_id', auth()->id())->get();
+        return view('calendar.layout', compact('events'));  
+    }
 
     public function create()
     {
         return view('calendar.layout');
     }
 
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'title' => 'required|string',
-        'start_time' => 'required|date',
-        'end_time' => 'nullable|date',
-        'all_day' => 'boolean',
-        'description' => 'nullable|string'
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'start_time' => 'required|date',
+            'end_time' => 'nullable|date',
+            'all_day' => 'boolean',
+            'description' => 'nullable|string'
+        ]);
 
-    $validated['user_id'] = auth()->id(); // Gán user đang đăng nhập
+        $validated['user_id'] = auth()->id();
 
-    $event = Event::create($validated);
+        $event = Event::create($validated);
 
-    if ($request->wantsJson()) {
-        return response()->json(['message' => 'Sự kiện đã được tạo thành công', 'event' => $event], 201);
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'Sự kiện đã được tạo thành công', 'event' => $event], 201);
+        }
+
+        return redirect()->route('calendar.layout')->with('success', 'Sự kiện đã được tạo thành công.');
     }
-
-    return redirect()->route('calendar.layout')->with('success', 'Sự kiện đã được tạo thành công.');
-}
 
 
 
     public function show($id)
-{
-    $event = Event::findOrFail($id);
-    return response()->json($event);
-}
+    {
+        $event = Event::findOrFail($id);
+        return response()->json($event);
+    }
 
     public function edit(Event $event)
     {
@@ -67,15 +67,15 @@ public function store(Request $request)
         return redirect()->route('calendar.layout')->with('success', 'Sự kiện đã được cập nhật.');
     }
 
-  public function destroy($id)
-{
-    $event = Event::findOrFail($id);
-    $event->delete();
+    public function destroy($id)
+    {
+        $event = Event::findOrFail($id);
+        $event->delete();
 
-    if (request()->wantsJson()) {
-        return response()->json(['message' => 'Đã xóa sự kiện']);
+        if (request()->wantsJson()) {
+            return response()->json(['message' => 'Đã xóa sự kiện']);
+        }
+
+        return redirect()->route('calendar.layout')->with('success', 'Sự kiện đã được xóa.');
     }
-
-    return redirect()->route('calendar.layout')->with('success', 'Sự kiện đã được xóa.');
-}
 }
