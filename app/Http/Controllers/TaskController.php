@@ -51,7 +51,7 @@ class TaskController extends Controller
             'description' => $request->description,
             'all_day' => $request->has('all_day'),
             'task_list_id' => $request->task_list_id,
-            'user_id' => auth()->id(), // Gán user_id
+            'user_id' => auth()->id(), 
         ]);
 
         return redirect()->route('tasks.index', ['task_list_id' => $request->task_list_id])
