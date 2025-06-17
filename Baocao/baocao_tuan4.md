@@ -22,7 +22,7 @@
 
 ## **2. Đóng góp của từng thành viên**
 
-* **Hồng Quân**: Quản lý tiến độ tổng thể, điều phối công việc; kiểm thử chức năng toàn hệ thống; chuẩn bị slide và nội dung demo
+* **Hồng Quân**: Quản lý tiến độ tổng thể; kiểm thử chức năng toàn hệ thống; chuẩn bị slide và nội dung demo
 * **Tuấn Bảo**: Tối ưu backend, xử lý logic thông báo nhắc việc và tích hợp dữ liệu với calendar
 * **Cẩm Ly**: Thiết kế và hoàn thiện giao diện calendar, đảm bảo dashboard trực quan và dễ sử dụng
 * **Xuân Đại**: Kiểm tra và hoàn thiện phần validate form, kết nối frontend-backend, sửa lỗi hiển thị popup
